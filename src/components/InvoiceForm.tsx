@@ -62,7 +62,7 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, initialData,
   };
 
   const calculateSubtotal = () => {
-    return formData.items.reduce((sum, item) => sum + calculateItemTotal(item.pieces, item.pricePerUnit), 0);
+    return formData.items.reduce((sum, item) => sum + calculateItemTotal(item.weight, item.pricePerUnit), 0);
   };
 
   const calculateTotal = () => {
@@ -235,7 +235,7 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, initialData,
                   <div className="flex-1">
                     <Label>Total ($)</Label>
                     <Input
-                      value={calculateItemTotal(item.pieces, item.pricePerUnit).toFixed(2)}
+                      value={calculateItemTotal(item.weight, item.pricePerUnit).toFixed(2)}
                       readOnly
                       className="bg-muted"
                     />

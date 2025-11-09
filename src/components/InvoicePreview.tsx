@@ -202,6 +202,22 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
             ))}
 
             {/* Total row */}
+            {invoice.shippingCharges > 0 && (
+              <tr>
+                <td colSpan={5} className="border border-gray-400 p-1 text-right font-bold">
+                  <div className="text-right font-semibold">Shipping Charges</div>
+                </td>
+                <td className="border border-gray-400 p-1 text-center font-bold">{invoice.shippingCharges}$</td>
+              </tr>
+            )}
+            {invoice.otherCharges > 0 && (
+              <tr>
+                <td colSpan={5} className="border border-gray-400 p-1 text-right font-bold">
+                  <div className="text-right font-semibold">Sales Tax</div>
+                </td>
+                <td className="border border-gray-400 p-1 text-center font-bold">{invoice.otherCharges}$</td>
+              </tr>
+            )}
             <tr>
               <td colSpan={5} className="border border-gray-400 p-1 text-right font-bold">
                 TOTAL

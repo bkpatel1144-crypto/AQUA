@@ -20,13 +20,13 @@ const mapToApiFormat = (formData: InvoiceFormData, invoiceNo?: number) => {
       pieces: item.pieces,
       weight: item.weight,
       pricePerUnit: item.pricePerUnit,
-      total: item.pieces * item.pricePerUnit
+      total: item.weight * item.pricePerUnit
     })),
     charges: {
-      subtotal: formData.items.reduce((sum, item) => sum + (item.pieces * item.pricePerUnit), 0),
+      subtotal: formData.items.reduce((sum, item) => sum + (item.weight * item.pricePerUnit), 0),
       shipping: formData.shippingCharges,
       other: formData.otherCharges,
-      totalAmount: formData.items.reduce((sum, item) => sum + (item.pieces * item.pricePerUnit), 0) + formData.shippingCharges + formData.otherCharges
+      totalAmount: formData.items.reduce((sum, item) => sum + (item.weight * item.pricePerUnit), 0) + formData.shippingCharges + formData.otherCharges
     }
   };
 };
