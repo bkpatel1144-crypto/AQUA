@@ -190,7 +190,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
             ))}
 
             {/* Fill to 6 rows */}
-            {Array.from({ length: Math.max(0, 3 - invoice.items.length) }).map((_, i) => (
+            {Array.from({ length: Math.max(0, 0 - invoice.items.length) }).map((_, i) => (
               <tr key={`empty-${i}`}>
                 <td className="border border-gray-400 p-1">&nbsp;</td>
                 <td className="border border-gray-400 p-1">&nbsp;</td>
