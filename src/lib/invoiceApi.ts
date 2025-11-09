@@ -1,6 +1,6 @@
 import { Invoice, InvoiceFormData } from '@/types/invoice';
 
-const BASE_URL = 'https://invoiceusa.vercel.app/api';
+const BASE_URL = 'https://aquab.vercel.app/api';
 
 // Map frontend invoice to API format
 const mapToApiFormat = (formData: InvoiceFormData, invoiceNo?: number) => {
@@ -33,11 +33,11 @@ const mapToApiFormat = (formData: InvoiceFormData, invoiceNo?: number) => {
 
 // Map API response to frontend format
 const mapFromApiFormat = (apiInvoice: any): Invoice => {
-  const invoiceNo = parseInt(apiInvoice.invoiceNumber.replace('INV-', ''));
+  // const invoiceNo = parseInt(apiInvoice.invoiceNumber.replace('INV-', ''));
 
   return {
     id: apiInvoice._id,
-    invoiceNo,
+    invoiceNo: apiInvoice.invoiceNumber,
     date: apiInvoice.date,
     terms: apiInvoice.terms,
     customerName: apiInvoice.customer.name,

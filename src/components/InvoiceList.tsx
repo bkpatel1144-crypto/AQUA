@@ -35,6 +35,7 @@ export const InvoiceList: React.FC<InvoiceListProps> = ({ onEdit, onView, refres
   const loadInvoices = async () => {
     try {
       const allInvoices = await InvoiceStorage.getAll();
+      console.log(allInvoices, "allInvoicesallInvoices")
       // Sort by invoice number descending (newest first)
       allInvoices.sort((a, b) => b.invoiceNo - a.invoiceNo);
       setInvoices(allInvoices);
@@ -94,6 +95,8 @@ export const InvoiceList: React.FC<InvoiceListProps> = ({ onEdit, onView, refres
   const formatCurrency = (amount: number) => {
     return `$${amount.toFixed(2)}`;
   };
+
+  console.log(filteredInvoices, "filteredInvoicesfilteredInvoices")
 
   return (
     <div className="space-y-6">

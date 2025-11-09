@@ -51,7 +51,7 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, initialData,
   const updateItem = (index: number, field: keyof Omit<InvoiceItem, 'id' | 'total'>, value: string | number) => {
     setFormData(prev => ({
       ...prev,
-      items: prev.items.map((item, i) => 
+      items: prev.items.map((item, i) =>
         i === index ? { ...item, [field]: value } : item
       )
     }));
@@ -71,7 +71,7 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, initialData,
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       if (editId) {
         await InvoiceStorage.update(editId, formData);
@@ -241,9 +241,9 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, initialData,
                     />
                   </div>
                   {formData.items.length > 1 && (
-                    <Button 
-                      type="button" 
-                      variant="outline" 
+                    <Button
+                      type="button"
+                      variant="outline"
                       size="icon"
                       onClick={() => removeItem(index)}
                       className="text-destructive hover:text-destructive"
