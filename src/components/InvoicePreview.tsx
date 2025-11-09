@@ -89,14 +89,14 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
           <Printer className="w-4 h-4 mr-2" />
           Print Invoice
         </Button>
-        <Button
+        {/* <Button
           onClick={handleDownloadPDF}
           variant="outline"
           className="border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white"
         >
           <Download className="w-4 h-4 mr-2" />
           Download PDF
-        </Button>
+        </Button> */}
       </div>
 
       {/* ----- Invoice Content ----- */}
