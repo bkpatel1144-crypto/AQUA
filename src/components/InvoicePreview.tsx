@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import logo from '../../public/lovable-uploads/logo.png';
+import stamplogo from '../../public/lovable-uploads/logowithsign.png';
 
 interface InvoicePreviewProps {
   invoice: Invoice;
@@ -238,7 +239,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
         </div>
 
         {/* ==== Bank Details (side-by-side) ==== */}
-        <div className="grid grid-cols-2 gap-4 mb-6 text-xs">
+        <div className="grid grid-cols-2 gap-4 mb-6 text-xs" style={{ fontSize: '10px' }}>
           <div className="border border-gray-400 p-2">
             <p className="font-bold mb-1">BANK DETAILS,</p>
             <p>A/C NAME : AQUA DIAMONDS LTD</p>
@@ -264,7 +265,13 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
             <p className="text-xs mt-1">Chop or signature.</p>
           </div>
           <div className="text-center">
-            <div className="border-t border-gray-400 w-40 mx-auto" style={{ marginTop: '60px' }} />
+            <img 
+              src={stamplogo} 
+              alt="Aqua Jewels Stamp" 
+              className=" mx-auto"
+              style={{ height: '100px' }}
+            />
+            <div className="border-t border-gray-400 w-40 mx-auto" />
             <p className="text-xs mt-1">Chop & Authorized Signature</p>
           </div>
         </div>
