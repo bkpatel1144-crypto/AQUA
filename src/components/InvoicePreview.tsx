@@ -262,7 +262,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice }) => {
         <div className="flex justify-between items-end mb-4">
           <div>
             <div className="border-t border-gray-400 w-40 mt-6" />
-            <p className="text-xs mt-1">Chop or signature.</p>
+            <p className="text-xs mt-1">Chop & signature.</p>
           </div>
           <div className="text-center">
             <img 
