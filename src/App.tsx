@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,14 +17,13 @@ const Login = ({ onLogin }) => {
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
     // Simulate a brief delay for animation
     setTimeout(() => {
-      if (id === "Admin" && pass === "123") {
+      if (id === "Maneediam" && pass === "Sindoor@2025") {
         onLogin();
       } else {
         setError("Invalid credentials");
@@ -32,7 +31,6 @@ const Login = ({ onLogin }) => {
       setIsLoading(false);
     }, 1000);
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative overflow-hidden">
       {/* Animated background elements for water theme */}
@@ -46,7 +44,6 @@ const Login = ({ onLogin }) => {
         <div className="absolute top-40 right-20 w-48 h-48 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-20 left-20 w-40 h-40 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -160,7 +157,6 @@ const Login = ({ onLogin }) => {
           </CardContent>
         </Card>
       </motion.div>
-
       <style jsx>{`
         @keyframes blob {
           0% {
@@ -190,36 +186,63 @@ const Login = ({ onLogin }) => {
   );
 };
 
-// Private Route Component (unchanged)
-const PrivateRoute = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    // Check localStorage for persisted login (simple enhancement)
-    return localStorage.getItem("aquaLoggedIn") === "true";
-  });
-
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-};
-
 const queryClient = new QueryClient();
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("aquaLoggedIn") === "true";
+    const loggedIn = localStorage.getItem("aquaLoggedIn") === "true";
+    if (loggedIn) {
+      const loginTimeStr = localStorage.getItem("aquaLoginTime");
+      if (loginTimeStr) {
+        const loginTime = parseInt(loginTimeStr);
+        const timeElapsed = Date.now() - loginTime;
+        if (timeElapsed > 60 * 60 * 1000) { // 1 hour in milliseconds
+          // Session expired, clear storage
+          localStorage.removeItem("aquaLoggedIn");
+          localStorage.removeItem("aquaLoginTime");
+          return false;
+        }
+        return true;
+      } else {
+        // No login time stored, clear and return false
+        localStorage.removeItem("aquaLoggedIn");
+        return false;
+      }
+    }
+    return false;
   });
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     localStorage.setItem("aquaLoggedIn", "true");
+    localStorage.setItem("aquaLoginTime", Date.now().toString());
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("aquaLoggedIn");
+    localStorage.removeItem("aquaLoginTime");
   };
+
+  // Optional: Auto-logout after 1 hour even without refresh (time-based from login)
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
+    const loginTimeStr = localStorage.getItem("aquaLoginTime");
+    if (loginTimeStr) {
+      const loginTime = parseInt(loginTimeStr);
+      const timeRemaining = (loginTime + 60 * 60 * 1000) - Date.now();
+      if (timeRemaining > 0) {
+        const timeoutId = setTimeout(() => {
+          handleLogout();
+        }, timeRemaining);
+        return () => clearTimeout(timeoutId);
+      } else {
+        // Already expired
+        handleLogout();
+      }
+    }
+  }, [isLoggedIn]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -230,11 +253,7 @@ const App = () => {
           <Routes>
             <Route
               path="/"
-              element={
-                <PrivateRoute>
-                  <Index />
-                </PrivateRoute>
-              }
+              element={isLoggedIn ? <Index /> : <Navigate to="/login" replace />}
             />
             <Route
               path="/login"
