@@ -5,7 +5,7 @@ const BASE_URL = 'https://aquab.vercel.app/api';
 // Map frontend invoice to API format
 const mapToApiFormat = (formData: InvoiceFormData, invoiceNo?: number) => {
   return {
-    invoiceNumber: invoiceNo ? `INV-${invoiceNo.toString().padStart(4, '0')}` : undefined,
+    invoiceNumber: invoiceNo ? `${invoiceNo.toString().padStart(4, '0')}` : undefined,
     date: formData.date,
     terms: formData.terms,
     customer: {
